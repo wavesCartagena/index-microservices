@@ -1,0 +1,26 @@
+name: CI Pull request for MASTER Branch
+
+on:
+  push:
+    branches: 'develop'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest    
+    permissions:
+      contents: read
+      pull-requests: write
+    if: ${{ contains(github.event.head_commit.message, 'publish') }}
+
+    steps:
+      - uses: actions/checkout@v3
+          
+      - name: pull-request
+        uses: repo-sync/pull-request@v2
+        with:
+          destination_branch: "master"
+          pr_title: "Pulling APR ${{ github.ref }} into master"
+          pr_body: "*An automated PR from ${{ github.ref }}*"
+          pr_label: "auto-pr"
+          pr_draft: false
+          github_token: ${{ secrets.GITHUB_TOKEN }}

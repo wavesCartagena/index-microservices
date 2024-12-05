@@ -1,0 +1,36 @@
+name: Deploy lab
+
+on:
+  push:
+    branches: 'develop'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Get actions latest code
+      uses: actions/checkout@v3
+      
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@4.3.0
+      with:
+        server: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        local-dir: './'
+        server-dir: './public_html/lab/microservices/'
+        exclude: |
+          .gitignore
+          README.md
+          .github
+          
+    - name: Execute Remote Commands
+      uses: appleboy/ssh-action@v0.1.8
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.SSH_USERNAME }}
+        password: ${{ secrets.SSH_PASSWORD }}
+        script: |
+          cd /public_html/lab/microservices/
+          docker-compose down
+          docker-compose up -d --build

@@ -1,0 +1,63 @@
+version: '3.8'
+
+services:
+  # Base de datos MariaDB
+  mariadb:
+    image: 'mariadb:10.11.9'  # Se recomienda una versión estable
+    container_name: mariadbTwo
+    environment:
+      - MARIADB_ROOT_PASSWORD=1047510748Ja+
+      - MARIADB_USER=bn_laravel
+      - MARIADB_PASSWORD=u210742561_microservices+
+      - MARIADB_DATABASE=u210742561_microservices
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    networks:
+      - laravel_network
+    ports:
+      - '3306:3306'
+
+  # Laravel 10
+  microservices-app:
+    image: 'bitnami/laravel:10'
+    container_name: laravel10
+    ports:
+      - '8000:8000'
+    environment:
+      - DB_HOST=mariadb
+      - DB_PORT=3306
+      - DB_DATABASE=u210742561_microservices
+      - DB_USERNAME=u210742561_microservices
+      - DB_PASSWORD=1047510748Ja+
+    volumes:
+      - ./core:/app
+    networks:
+      - laravel_network
+    depends_on:
+      - mariadb
+
+  # phpMyAdmin para gestionar la base de datos
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpmyadminTwo
+    ports:
+      - '8080:80'
+    environment:
+      - PMA_HOST=mariadb
+      - MYSQL_ROOT_PASSWORD=1047510748Ja+
+    networks:
+      - laravel_network
+    depends_on:
+      - mariadb
+
+# Volúmenes para persistencia de datos
+volumes:
+  mariadb_data:
+    driver: local
+  laravel_data:
+    driver: local
+
+# Red compartida entre los servicios
+networks:
+  laravel_network:
+    driver: bridge
