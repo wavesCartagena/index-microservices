@@ -19,7 +19,7 @@ jobs:
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
         local-dir: './'
-        server-dir: './public_html/microservices/'
+        server-dir: './microservices/'
         exclude: |
           .gitignore
           README.md
