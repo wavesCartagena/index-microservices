@@ -16,3 +16,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+use Illuminate\Support\Facades\Log;
+
+Route::get('/test-log', function () {
+    Log::info('Test log entry');
+    return response()->json(['message' => 'Log created']);
+});
