@@ -16,7 +16,7 @@ jobs:
       run: |
         sudo apt-get install lftp
 
-        - name: Create remote directory (if not exists)
+    - name: Create remote directory (if not exists)
       run: |
         lftp -u "${{ secrets.USERNAME }}","${{ secrets.PASSWORD }}" -e "set ssl:verify-certificate false; mkdir -p /microservices/mariadb_data; exit" ftp://${{ secrets.HOST }}
 
