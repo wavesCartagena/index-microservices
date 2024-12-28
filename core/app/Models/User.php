@@ -19,6 +19,11 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'last_name',
+        'nick_name',
+        'id_card',
+        'type_id_card',
+        'role',
         'email',
         'password',
     ];
@@ -42,4 +47,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    protected $primaryKey = 'code';
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($user) {
+            $user->password = bcrypt($user->password); // Hashear la contraseña
+        });
+    }
 }
