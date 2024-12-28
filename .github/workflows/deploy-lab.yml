@@ -23,6 +23,7 @@ jobs:
           .gitignore
           README.md
           .github
+          /mariadb_data/
           
     - name: Execute Remote Commands
       uses: appleboy/ssh-action@v0.1.8

@@ -29,3 +29,4 @@ jobs:
           /.git/
           .git/
           ,git
+          /mariadb_data/
