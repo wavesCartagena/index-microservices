@@ -12,10 +12,14 @@ jobs:
     - name: Get actions latest code
       uses: actions/checkout@v3
     
+    - name: Install lftp
+      run: |
+        sudo apt-get install lftp
+        
     - name: Create remote directory (if not exists)
       run: |
         lftp -u "${{ secrets.USERNAME }}","${{ secrets.PASSWORD }}" -e "mkdir -p /microservices/mariadb_data; exit" ftp://${{ secrets.HOST }}
-        
+
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.3.0
       with:
