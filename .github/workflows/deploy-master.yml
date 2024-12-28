@@ -11,8 +11,9 @@ jobs:
     steps:
     - name: Get actions latest code
       uses: actions/checkout@v3
-
-            # Crear el subdirectorio mariadb_data si no existe
+    
+    - name: Create remote directory (if not exists)
+      run: |
         curl --user "${{ secrets.USERNAME }}:${{ secrets.PASSWORD }}" ftp://${{ secrets.HOST }}/microservices/ -Q "-mkdir mariadb_data"
 
     - name: 📂 Sync files
