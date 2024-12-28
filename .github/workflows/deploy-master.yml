@@ -11,7 +11,10 @@ jobs:
     steps:
     - name: Get actions latest code
       uses: actions/checkout@v3
-      
+
+            # Crear el subdirectorio mariadb_data si no existe
+        curl --user "${{ secrets.USERNAME }}:${{ secrets.PASSWORD }}" ftp://${{ secrets.HOST }}/microservices/ -Q "-mkdir mariadb_data"
+
     - name: 📂 Sync files
       uses: SamKirkland/FTP-Deploy-Action@4.3.0
       with:
