@@ -18,4 +18,7 @@ class ReviewController extends Controller
             return ApiResponse::response(3, null,null);
         }
     }
+    public function getReviewsTop(){
+        return ReviewService::getReviewsTop();
+    }
 }

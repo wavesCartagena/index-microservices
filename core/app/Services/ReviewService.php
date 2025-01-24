@@ -50,4 +50,23 @@ class ReviewService
         }
     }
 
+    public static function getReviewsTop(){
+
+        try {
+            // Consultar las 10 primeras reseñas que cumplan las condiciones
+            $reviews = ReviewModel::where('isVisible', 1)
+                ->where('rating', 5)
+                ->orderBy('created_at', 'desc') // Ordenar por fecha de creación descendente
+                ->take(10) // Limitar a las 10 primeras
+                ->get();
+
+            // Respuesta exitosa utilizando ApiResponse
+            return ApiResponse::response(1, $reviews->toArray());
+
+        } catch (\Exception $e) {
+            // Manejo de errores y respuesta con ApiResponse
+            return ApiResponse::response(4, null, ['error' => $e->getMessage()]);
+        }
+    }
+
 }

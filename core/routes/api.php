@@ -20,3 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('register/review', [ReviewController::class, 'RegisterReviews']);
+Route::get('get/reviews/top', [ReviewController::class, 'getReviewsTop']);
